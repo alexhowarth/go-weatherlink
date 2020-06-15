@@ -1,5 +1,8 @@
 # WeatherLink v2 API in Go
 
+[![GoDoc](https://godoc.org/github.com/alexhowarth/go-weatherlink?status.svg)](https://pkg.go.dev/github.com/alexhowarth/go-weatherlink)
+[![Go Report Card](https://goreportcard.com/badge/alexhowarth/go-weatherlink)](https://goreportcard.com/report/github.com/alexhowarth/go-weatherlink)
+
 This package provides a Go library for the Davis WeatherLink v2 API.
 
 ## Installation

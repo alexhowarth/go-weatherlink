@@ -54,7 +54,7 @@ type SignatureParams map[string]string
 // NewClient returns a WeatherLink client for interacting with the API
 func (conf *Config) NewClient() *Client {
 	if conf.Key == "" || conf.Secret == "" {
-		panic("APIKey and APISecret required.")
+		panic("Key and Secret required.")
 	}
 	wl := &Client{
 		client: &http.Client{},
