@@ -13,7 +13,7 @@ go get github.com/alexhowarth/go-weatherlink
 The following example (change the Key and Secret in the file) outputs data for all of your weather stations.
 
 ~~~~
-go run examples/example.go
+go run example/example.go
 ~~~~
 
 ## TODO
