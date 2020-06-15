@@ -1,0 +1,51 @@
+{
+    "sensors": [
+        {
+            "lsid": 12822,
+            "sensor_type": 37,
+            "category": "ISS",
+            "manufacturer": "Davis Instruments",
+            "product_name": "Vantage Vue, Wireless",
+            "product_number": "6357",
+            "rain_collector_type": 3,
+            "active": true,
+            "created_date": 1516999447,
+            "modified_date": 1516999447,
+            "station_id": 2970,
+            "station_name": "Foo station",
+            "parent_device_type": "Gateway",
+            "parent_device_name": "Somewhere",
+            "parent_device_id": 67890,
+            "parent_device_id_hex": "001D0BF19123",
+            "port_number": 9,
+            "latitude": 40.70166,
+            "longitude": -74.0365,
+            "elevation": 20.01288,
+            "tx_id": null
+        },
+        {
+            "lsid": 12823,
+            "sensor_type": 3,
+            "category": "Barometer",
+            "manufacturer": "Davis Instruments",
+            "product_name": "Barometer",
+            "product_number": "",
+            "rain_collector_type": 0,
+            "active": true,
+            "created_date": 1516999447,
+            "modified_date": 1516999447,
+            "station_id": 2970,
+            "station_name": "Foo station",
+            "parent_device_type": "Gateway",
+            "parent_device_name": "Foo station",
+            "parent_device_id": 15834030,
+            "parent_device_id_hex": "001D0BF19123",
+            "port_number": -1,
+            "latitude": 40.70166,
+            "longitude": -74.0365,
+            "elevation": 20.01288,
+            "tx_id": null
+        }
+    ],
+    "generated_at": 1591912654
+}

@@ -1,0 +1,29 @@
+{
+    "stations": [
+        {
+            "station_id": 2970,
+            "station_name": "Foo station",
+            "gateway_id": 12345678,
+            "gateway_id_hex": "0001ABCDEF",
+            "product_number": "6621",
+            "username": "myusername",
+            "user_email": "kjdsf@dshdsfkh.com",
+            "company_name": "",
+            "active": true,
+            "private": false,
+            "recording_interval": 5,
+            "firmware_version": "W2.25.42",
+            "meid": "A1000041234567",
+            "registered_date": 1516999447,
+            "subscription_end_date": 1613808000,
+            "time_zone": "America/New_York",
+            "city": "Jersey City",
+            "region": "NJ",
+            "country": "USA",
+            "latitude": 40.70166,
+            "longitude": -74.0365,
+            "elevation": 20.01288
+        }
+    ],
+    "generated_at": 1591909727
+}
