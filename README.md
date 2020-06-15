@@ -13,8 +13,8 @@ go get github.com/alexhowarth/go-weatherlink
 ```go
 // configure
 config := weatherlink.Config{
-		Key:    "mykey",
-		Secret: "mysecret",
+        Key:    "mykey",
+        Secret: "mysecret",
 }
 
 // build a client
