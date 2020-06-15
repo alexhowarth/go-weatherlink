@@ -10,11 +10,30 @@ go get github.com/alexhowarth/go-weatherlink
 
 ## Usage
 
-The following example (change the Key and Secret in the file) outputs data for all of your weather stations.
+```go
+// configure
+config := weatherlink.Config{
+		Key:    "mykey",
+		Secret: "mysecret",
+}
 
-~~~~
-go run example/example.go
-~~~~
+// build a client
+wl := config.NewClient()
+
+// all weather stations associated with your key
+st, err := wl.AllStations()
+if err != nil {
+        // handle error
+}
+
+// current conditions for a station
+cu, err := wl.Current(123)
+if err != nil {
+        // handle error
+}
+```
+
+More examples in example/example.go
 
 ## TODO
 
