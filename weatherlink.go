@@ -94,10 +94,8 @@ func (w *Client) BuildURL(s string, p SignatureParams) string {
 		p[k] = q[k][0]
 	}
 
-	signature := encode(w.config.Secret, p.SignatureString())
-
 	q = u.Query()
-	q.Add(sigParam, signature)
+	q.Add(sigParam, p.Signature(w.config.Secret))
 	q.Add(keyParam, w.config.Key)
 	q.Add(tParam, p[tParam])
 	u.RawQuery = q.Encode()
@@ -111,8 +109,13 @@ func (s SignatureParams) Add(key string, value string) {
 	return
 }
 
-// SignatureString is the unencoded signature
-func (s SignatureParams) SignatureString() string {
+// Signature encodes and returns the HMAC hexidecimal string
+func (s SignatureParams) Signature(secret string) string {
+	return encode(secret, s.String())
+}
+
+// String is the unencoded signature
+func (s SignatureParams) String() string {
 	var buf strings.Builder
 	keys := make([]string, 0, len(s))
 	for k := range s {
@@ -126,7 +129,7 @@ func (s SignatureParams) SignatureString() string {
 	return buf.String()
 }
 
-func (w *Client) Get(url string, params SignatureParams) (*http.Response, error) {
+func (w *Client) get(url string, params SignatureParams) (*http.Response, error) {
 	if params == nil {
 		params = w.MakeSignatureParams()
 	}
@@ -184,7 +187,7 @@ func (w *Client) Stations(stations []int) (sr StationsResponse, err error) {
 		sp.Add("station-ids", csv)
 	}
 
-	resp, err := w.Get(fmt.Sprintf(stationsPathFmt, csv), sp)
+	resp, err := w.get(fmt.Sprintf(stationsPathFmt, csv), sp)
 	if err != nil {
 		return
 	}
@@ -245,7 +248,7 @@ func (w *Client) Sensors(sensors []int) (sr SensorsResponse, err error) {
 		sp.Add("sensor-ids", csv)
 	}
 
-	resp, err := w.Get(fmt.Sprintf(sensorsPathFmt, csv), sp)
+	resp, err := w.get(fmt.Sprintf(sensorsPathFmt, csv), sp)
 	if err != nil {
 		return
 	}
@@ -342,7 +345,7 @@ func (w *Client) Current(station int) (cr CurrentResponse, err error) {
 	sp := w.MakeSignatureParams()
 	sp.Add("station-id", strconv.Itoa(station))
 
-	resp, err := w.Get(fmt.Sprintf(currentPathFmt, station), sp)
+	resp, err := w.get(fmt.Sprintf(currentPathFmt, station), sp)
 	if err != nil {
 		return
 	}
@@ -360,7 +363,7 @@ func (w *Client) Current(station int) (cr CurrentResponse, err error) {
 	return cr, nil
 }
 
-// HistoricResponse gets historic data for one station ID within a given timerange
+// HistoricResponse represents historic data for one station ID within a given timerange
 type HistoricResponse struct {
 	Sensors []struct {
 		Lsid int `json:"lsid"`
@@ -415,7 +418,7 @@ func (w *Client) Historic(station int, start time.Time, end time.Time) (hr Histo
 	sp := w.MakeSignatureParams()
 	sp.Add("station-id", strconv.Itoa(station))
 
-	resp, err := w.Get(fmt.Sprintf(historicPathFmt, station, start.Unix(), end.Unix()), sp)
+	resp, err := w.get(fmt.Sprintf(historicPathFmt, station, start.Unix(), end.Unix()), sp)
 	if err != nil {
 		return
 	}
@@ -436,7 +439,7 @@ func (w *Client) Historic(station int, start time.Time, end time.Time) (hr Histo
 // SensorCatalog saves a catalogue of all types of sensors to file
 func (w *Client) SensorCatalog(path string) (err error) {
 
-	resp, err := w.Get(sensorCatalogPath, nil)
+	resp, err := w.get(sensorCatalogPath, nil)
 	if err != nil {
 		return
 	}

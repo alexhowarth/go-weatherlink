@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	//configure
+	// configure
 	config := weatherlink.Config{
 		Key:    "mykey",
 		Secret: "mysecret",
@@ -19,26 +19,26 @@ func main() {
 	wl := config.NewClient()
 
 	// get all stations
-	stations, err := wl.AllStations()
+	stRes, err := wl.AllStations()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	// iterate over stations
-	for _, station := range stations.Stations {
+	for _, station := range stRes.Stations {
 
 		fmt.Printf("Found station ID %v (%v)\n", station.StationID, station.StationName)
 
 		// get current weather conditions for this station
-		current, err := wl.Current(station.StationID)
+		cuRes, err := wl.Current(station.StationID)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
 		// iterate over the sensors
-		for _, sensor := range current.Sensors {
+		for _, sensor := range cuRes.Sensors {
 			// for each sensor, get some data
 			for _, data := range sensor.Data {
 				fmt.Printf("Wind Direction: %v\n", data.WindDir)
@@ -52,14 +52,14 @@ func main() {
 		end := time.Now().Add(-time.Minute * 30)
 
 		// get historic for this station
-		h, err := wl.Historic(station.StationID, start, end)
+		hiRes, err := wl.Historic(station.StationID, start, end)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 		// iterate over the sensor data for this historic data
 		fmt.Printf("Historic data...")
-		for _, sensor := range h.Sensors {
+		for _, sensor := range hiRes.Sensors {
 			// for each sensor, get some data
 			for _, data := range sensor.Data {
 				fmt.Printf("Date: %v\n", time.Unix(int64(data.Ts), 0))

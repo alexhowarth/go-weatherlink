@@ -23,7 +23,7 @@ func TestSignatureParams(t *testing.T) {
 	p["foo"] = "bar"
 	p["t"] = "123"
 
-	got := p.SignatureString()
+	got := p.String()
 	expect := "api-keymykeyfoobart123"
 	if got != expect {
 		t.Fatalf("Expected %v got %v", expect, got)
