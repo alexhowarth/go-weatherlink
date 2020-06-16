@@ -46,7 +46,7 @@ if err != nil {
 
 for _, v := range h.Sensors {
         for _, d := range v.Data {
-                fmt.Printf("Time: %v Temp: %v\n", time.Unix(int64(d.Ts), 0), d.TempOut)
+                fmt.Printf("Time: %v Temp: %v\n", time.Unix(d.Ts, 0), d.TempOut)
 	}
 }
 ```
