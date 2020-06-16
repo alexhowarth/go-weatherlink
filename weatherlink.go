@@ -207,7 +207,7 @@ func (w *Client) Stations(stations []int) (sr StationsResponse, err error) {
 	return sr, nil
 }
 
-// SensorsResponse represents data from the /sendors endpoint
+// SensorsResponse represents data from the /sensors endpoint
 type SensorsResponse struct {
 	Sensors []struct {
 		Lsid              int         `json:"lsid"`

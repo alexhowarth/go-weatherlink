@@ -36,7 +36,7 @@ if err != nil {
 }
 ```
 
-More examples in [example/example.go](example/example.go)
+See the examples directory for more.
 
 ## TODO
 

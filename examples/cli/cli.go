@@ -13,16 +13,16 @@ import (
 
 // Could be use with jq, for example:
 // go run examples/cli/cli.go --key mykey --secret mysecret --list-stations | jq -r '.stations[].station_id'
-// go run examples/cli/cli.go --key mykey --secret mysecret --station 2970 | jq -r '.sensors[].data[].wind_dir'
+// go run examples/cli/cli.go --key mykey --secret mysecret --station 123 | jq -r '.sensors[].data[].wind_dir'
 
 // To turn this into a binary:
 // go build examples/cli/cli.go
 // ./cli --help
 func main() {
 
-	var station = flag.Int("station", 0, "station id")
 	var key = flag.String("key", "", "api key")
 	var secret = flag.String("secret", "", "api secret")
+	var station = flag.Int("station", 0, "station id")
 	var listStations = flag.Bool("list-stations", false, "list all stations")
 
 	flag.Parse()
