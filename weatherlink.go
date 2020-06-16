@@ -20,7 +20,7 @@ import (
 	"time"
 )
 
-const apiURL string = "api.weatherlink.com"
+const apiHost string = "api.weatherlink.com"
 const apiVersion string = "v2"
 
 const (
@@ -38,30 +38,32 @@ const (
 	historicPathFmt   string = "/historic/%v?start-timestamp=%v&end-timestamp=%v"
 )
 
+// Config contains the fields to construct a Client. Client is optional.
 type Config struct {
 	Client *http.Client
 	Key    string
 	Secret string
 }
 
+// Client contains the http client and config. It is used to make requests to the API endpoints
 type Client struct {
-	client *http.Client
-	config *Config
+	Client *http.Client
+	Config *Config
 }
 
 type SignatureParams map[string]string
 
 // NewClient returns a WeatherLink client for interacting with the API
-func (conf *Config) NewClient() *Client {
-	if conf.Key == "" || conf.Secret == "" {
+func (c *Config) NewClient() *Client {
+	if c.Key == "" || c.Secret == "" {
 		panic("Key and Secret required.")
 	}
 	wl := &Client{
-		client: &http.Client{},
-		config: conf,
+		Client: &http.Client{},
+		Config: c,
 	}
-	if conf.Client != nil {
-		wl.client = conf.Client
+	if c.Client != nil {
+		wl.Client = c.Client
 	}
 	return wl
 }
@@ -69,12 +71,12 @@ func (conf *Config) NewClient() *Client {
 // MakeSignatureParams contains the common signature parameters
 func (w *Client) MakeSignatureParams() SignatureParams {
 	p := make(SignatureParams)
-	p[keyParam] = w.config.Key
+	p[keyParam] = w.Config.Key
 	p[tParam] = strconv.FormatInt(time.Now().Unix(), 10)
 	return p
 }
 
-func (w *Client) BuildURL(s string, p SignatureParams) string {
+func (w *Client) buildURL(s string, p SignatureParams) string {
 
 	u, err := url.Parse(s)
 	if err != nil {
@@ -86,7 +88,7 @@ func (w *Client) BuildURL(s string, p SignatureParams) string {
 	}
 
 	u.Scheme = "https"
-	u.Host = apiURL
+	u.Host = apiHost
 	u.Path = path.Join(apiVersion + u.Path)
 
 	q := u.Query()
@@ -95,8 +97,8 @@ func (w *Client) BuildURL(s string, p SignatureParams) string {
 	}
 
 	q = u.Query()
-	q.Add(sigParam, p.Signature(w.config.Secret))
-	q.Add(keyParam, w.config.Key)
+	q.Add(sigParam, p.Signature(w.Config.Secret))
+	q.Add(keyParam, w.Config.Key)
 	q.Add(tParam, p[tParam])
 	u.RawQuery = q.Encode()
 
@@ -109,7 +111,7 @@ func (s SignatureParams) Add(key string, value string) {
 	return
 }
 
-// Signature encodes and returns the HMAC hexidecimal string
+// Signature encodes and returns the HMAC hexadecimal string
 func (s SignatureParams) Signature(secret string) string {
 	return encode(secret, s.String())
 }
@@ -133,10 +135,10 @@ func (w *Client) get(url string, params SignatureParams) (*http.Response, error)
 	if params == nil {
 		params = w.MakeSignatureParams()
 	}
-	return w.client.Get(w.BuildURL(url, params))
+	return w.Client.Get(w.buildURL(url, params))
 }
 
-// encode returns an hexidecimal HMAC string (used for the signature)
+// encode returns an hexadecimal HMAC string (used for the signature)
 func encode(secret string, msg string) string {
 	mac := hmac.New(sha256.New, []byte(secret))
 	mac.Write([]byte(msg))

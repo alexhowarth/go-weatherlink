@@ -36,7 +36,7 @@ if err != nil {
 }
 ```
 
-More examples in example/example.go
+More examples in [example/example.go](example/example.go)
 
 ## TODO
 
@@ -49,4 +49,4 @@ This is work in progress. Let me know if something breaks.
 
 ## API
 
-Documentation for the API can be found [here](https://weatherlink.github.io/v2-api/)
+Documentation for the API can be found at [https://weatherlink.github.io/v2-api/](https://weatherlink.github.io/v2-api/)
