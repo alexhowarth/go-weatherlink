@@ -34,6 +34,21 @@ cu, err := wl.Current(123)
 if err != nil {
         // handle error
 }
+
+// historic for a station
+start := time.Now().Add(-time.Hour * 2)
+end := time.Now()
+
+h, err := wl.Historic(123, start, end)
+if err != nil {
+        // handle error
+}
+
+for _, v := range h.Sensors {
+        for _, d := range v.Data {
+                fmt.Printf("Time: %v Temp: %v\n", time.Unix(int64(d.Ts), 0), d.TempOut)
+	}
+}
 ```
 
 See the examples directory for more.
