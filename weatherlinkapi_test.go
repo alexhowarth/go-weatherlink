@@ -45,7 +45,7 @@ func TestCurrent(t *testing.T) {
 		}
 	}
 	{
-		expect := 1591894200
+		expect := int64(1591894200)
 		got := c.Sensors[0].Data[0].Ts
 		if got != expect {
 			t.Fatalf("Expected %v got %v", expect, got)
