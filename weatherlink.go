@@ -276,7 +276,7 @@ type CurrentResponse struct {
 		SensorType        int `json:"sensor_type"`
 		DataStructureType int `json:"data_structure_type"`
 		Data              []struct {
-			Ts                int         `json:"ts"`
+			Ts                int64       `json:"ts"`
 			BarTrend          float64     `json:"bar_trend"`
 			Bar               float64     `json:"bar"`
 			TempIn            float64     `json:"temp_in"`
@@ -370,7 +370,7 @@ type HistoricResponse struct {
 	Sensors []struct {
 		Lsid int `json:"lsid"`
 		Data []struct {
-			Ts               int     `json:"ts"`
+			Ts               int64   `json:"ts"`
 			ArchInt          int     `json:"arch_int"`
 			RevType          int     `json:"rev_type"`
 			TempOut          float64 `json:"temp_out"`

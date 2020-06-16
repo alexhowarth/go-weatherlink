@@ -11,7 +11,7 @@ import (
 
 // Simple command line script that will list stations and get current weather data in json
 
-// Could be use with jq, for example:
+// Could be used with jq, for example:
 // go run examples/cli/cli.go --key mykey --secret mysecret --list-stations | jq -r '.stations[].station_id'
 // go run examples/cli/cli.go --key mykey --secret mysecret --station 123 | jq -r '.sensors[].data[].wind_dir'
 
