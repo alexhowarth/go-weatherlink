@@ -1,4 +1,4 @@
-# Go WeatherLink v2 API client
+# Go WeatherLink v2 Client
 
 [![GoDoc](https://godoc.org/github.com/alexhowarth/go-weatherlink?status.svg)](https://pkg.go.dev/github.com/alexhowarth/go-weatherlink)
 [![Go Report Card](https://goreportcard.com/badge/alexhowarth/go-weatherlink)](https://goreportcard.com/report/github.com/alexhowarth/go-weatherlink)
