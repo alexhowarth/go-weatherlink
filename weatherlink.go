@@ -68,7 +68,7 @@ func (c *Config) NewClient() *Client {
 	return wl
 }
 
-// MakeSignatureParams contains the common signature parameters
+// MakeSignatureParams contains the common signature parameters and is used to add to the signature
 func (w *Client) MakeSignatureParams() SignatureParams {
 	p := make(SignatureParams)
 	p[keyParam] = w.Config.Key
