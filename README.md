@@ -55,7 +55,7 @@ for _, v := range h.Sensors {
 
 This package contains the command line tool `weatherlink-cli`. To install and use it:
 ```bash
-$ go install weatherlink-cli
+$ go install ./weatherlink-cli
 $ weatherlink-cli --help
 ```
 
