@@ -13,7 +13,6 @@ var key string
 var secret string
 var station int
 var client *weatherlink.Client
-var verbose bool
 
 var rootCmd = &cobra.Command{
 	Use:   "weatherlink-cli",
@@ -31,9 +30,12 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&key, "key", "", "api key")
 	rootCmd.PersistentFlags().StringVar(&secret, "secret", "", "api secret")
-	rootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "display verbose output")
 	rootCmd.MarkPersistentFlagRequired("key")
 	rootCmd.MarkPersistentFlagRequired("secret")
+	rootCmd.SetHelpCommand(&cobra.Command{
+		Use:    "no-help",
+		Hidden: true,
+	})
 }
 
 func initConfig() {
