@@ -51,7 +51,22 @@ for _, v := range h.Sensors {
 }
 ```
 
-See the examples directory for more.
+## Command line tool
+
+This package contains the command line tool `weatherlink-cli`. To install and use it:
+```bash
+$ go install weatherlink-cli
+$ weatherlink-cli --help
+```
+
+To extract certain data from the output, you might use [jq](https://stedolan.github.io/jq/):
+
+```bash
+$ weatherlink-cli historic --key mykey --secret mysecret --station 2970 --start="2020-07-08T00:00:00Z" --end="2020-07-08T01:00:00Z"| jq -r '.sensors[].data[] | "timestamp: \(.ts) temp_out: \(.temp_out) bar: \(.bar)"'
+
+timestamp: 1594167300 temp_out: 76.8 bar: 30.018
+timestamp: 1594167600 temp_out: 76.8 bar: 30.014
+```
 
 ## TODO
 
@@ -60,7 +75,7 @@ The following are not currently implemented:
  * Nodes
  * SensorActivity
 
-This is work in progress. Let me know if something breaks.
+This is work in progress. Let me know if something breaks or if your sensor type is not supported.
 
 ## API
 

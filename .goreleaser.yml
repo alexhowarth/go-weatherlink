@@ -1,0 +1,30 @@
+before:
+  hooks:
+    - go mod download
+    # you may remove this if you don't need go generate
+    - go generate ./...
+builds:
+  -
+    binary: weatherlink-cli
+    main: ./weatherlink-cli/main.go
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - arm
+      - arm64
+      - amd64
+      - 386
+    goarm:
+      - 6
+      - 7 
+    ignore:
+      - goos: darwin
+        goarch: arm
+      - goos: darwin
+        goarch: arm64
+      - goos: darwin
+        goarch: 386
