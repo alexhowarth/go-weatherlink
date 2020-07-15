@@ -2,7 +2,7 @@ name: goreleaser
 on:
   push:
     branches:
-      - "feature/cli"
+      - "!*"
     tags:
       - "v*.*.*"
 
