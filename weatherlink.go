@@ -179,8 +179,43 @@ func (w *Client) AllStations() (sr StationsResponse, err error) {
 	return w.Stations(nil)
 }
 
+// AllStationsGeneric gets all weather stations associated with your API Key
+// The result is an interface{} for generic use
+func (w *Client) AllStationsGeneric() (sr interface{}, err error) {
+	return w.StationsGeneric(nil)
+}
+
 // Stations gets weather stations for one or more station IDs provided
 func (w *Client) Stations(stations []int) (sr StationsResponse, err error) {
+
+	csv := intArrToCSV(stations)
+
+	sp := w.MakeSignatureParams()
+	if stations != nil {
+		sp.Add("station-ids", csv)
+	}
+
+	resp, err := w.get(fmt.Sprintf(stationsPathFmt, csv), sp)
+	if err != nil {
+		return
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		err = fmt.Errorf("Error making Stations request. Got status: %v", resp.Status)
+		return
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&sr)
+	if err != nil {
+		return
+	}
+
+	return sr, nil
+}
+
+// StationsGeneric gets weather stations for one or more station IDs provided
+// The result is an interface{} for generic use
+func (w *Client) StationsGeneric(stations []int) (sr interface{}, err error) {
 
 	csv := intArrToCSV(stations)
 
@@ -240,8 +275,43 @@ func (w *Client) AllSensors() (sr SensorsResponse, err error) {
 	return w.Sensors(nil)
 }
 
+// AllSensors gets all sensors attached to all weather stations associated with your API Key
+// The result is an interface{} for generic use
+func (w *Client) AllSensorsGeneric() (sr interface{}, err error) {
+	return w.SensorsGeneric(nil)
+}
+
 // Sensors gets sensors for one or more sensor IDs provided
 func (w *Client) Sensors(sensors []int) (sr SensorsResponse, err error) {
+
+	csv := intArrToCSV(sensors)
+
+	sp := w.MakeSignatureParams()
+	if sensors != nil {
+		sp.Add("sensor-ids", csv)
+	}
+
+	resp, err := w.get(fmt.Sprintf(sensorsPathFmt, csv), sp)
+	if err != nil {
+		return
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		err = fmt.Errorf("Error making Sensors request. Got status: %v", resp.Status)
+		return
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&sr)
+	if err != nil {
+		return
+	}
+
+	return sr, nil
+}
+
+// Sensors gets sensors for one or more sensor IDs provided
+// The result is an interface{} for generic use
+func (w *Client) SensorsGeneric(sensors []int) (sr interface{}, err error) {
 
 	csv := intArrToCSV(sensors)
 
@@ -365,6 +435,31 @@ func (w *Client) Current(station int) (cr CurrentResponse, err error) {
 	return cr, nil
 }
 
+// CurrentGeneric gets current conditions data for one station
+// The result is an interface{} for generic use
+func (w *Client) CurrentGeneric(station int) (cr interface{}, err error) {
+
+	sp := w.MakeSignatureParams()
+	sp.Add("station-id", strconv.Itoa(station))
+
+	resp, err := w.get(fmt.Sprintf(currentPathFmt, station), sp)
+	if err != nil {
+		return
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		err = fmt.Errorf("Error making Current request. Got status: %v", resp.Status)
+		return
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&cr)
+	if err != nil {
+		return
+	}
+
+	return cr, nil
+}
+
 // HistoricResponse represents historic data for one station ID within a given timerange
 type HistoricResponse struct {
 	Sensors []struct {
@@ -416,6 +511,31 @@ type HistoricResponse struct {
 
 // Historic gets historic data for one station ID within a given timerange
 func (w *Client) Historic(station int, start time.Time, end time.Time) (hr HistoricResponse, err error) {
+
+	sp := w.MakeSignatureParams()
+	sp.Add("station-id", strconv.Itoa(station))
+
+	resp, err := w.get(fmt.Sprintf(historicPathFmt, station, start.Unix(), end.Unix()), sp)
+	if err != nil {
+		return
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		err = fmt.Errorf("Error making Historic request. Got status: %v", resp.Status)
+		return
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&hr)
+	if err != nil {
+		return
+	}
+
+	return hr, nil
+}
+
+// HistoricGeneric gets historic data for one station ID within a given timerange
+// The result is an interface{} for generic use
+func (w *Client) HistoricGeneric(station int, start time.Time, end time.Time) (hr interface{}, err error) {
 
 	sp := w.MakeSignatureParams()
 	sp.Add("station-id", strconv.Itoa(station))
