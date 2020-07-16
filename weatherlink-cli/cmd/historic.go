@@ -20,7 +20,7 @@ func (h *historicTime) Set(s string) error {
 	if err != nil {
 		return err
 	}
-	*&h.t = t
+	h.t = t
 	return nil
 }
 
