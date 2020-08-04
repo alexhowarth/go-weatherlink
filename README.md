@@ -59,6 +59,8 @@ $ go install ./weatherlink-cli
 $ weatherlink-cli --help
 ```
 
+There are also pre-built binaries for various architectures [here](https://github.com/alexhowarth/go-weatherlink/releases).
+
 To extract certain data from the output, you might use [jq](https://stedolan.github.io/jq/):
 
 ```bash
